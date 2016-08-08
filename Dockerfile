@@ -1,6 +1,8 @@
 FROM       centos:centos7
 MAINTAINER Sonatype <cloud-ops@sonatype.com>
 
+ENV NEXUS_UID 200
+
 ENV NEXUS_DATA /nexus-data
 
 ENV NEXUS_VERSION 3.0.1-01
@@ -41,7 +43,7 @@ RUN sed \
     -e "s|java.io.tmpdir=data/tmp|java.io.tmpdir=${NEXUS_DATA}/tmp|g" \
     -i /opt/sonatype/nexus/bin/nexus.vmoptions
 
-RUN useradd -r -u 200 -m -c "nexus role account" -d ${NEXUS_DATA} -s /bin/false nexus
+RUN useradd -r -u ${NEXUS_UID} -m -c "nexus role account" -d ${NEXUS_DATA} -s /bin/false nexus
 
 VOLUME ${NEXUS_DATA}
 
